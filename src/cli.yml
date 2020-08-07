@@ -1,0 +1,52 @@
+name: "kcctl"
+version: "0.1"
+author: cwlo
+about: Helps manage kubeconfig files
+settings:
+  - ArgRequiredElseHelp
+  - ArgsNegateSubcommands
+  - GlobalVersion
+subcommands:
+  - list:
+      about: List kubeconfig files in the config directory.
+  - delete: 
+      about: Deletes a config from the config directory.
+      args:
+          - current:
+              help: Deletes the current config from the config directory.
+          - file:
+              takes_value: true
+              help: Deletes the target config file from the config directrory.
+  - switch:
+      about: Swaps this current config with the specified config.
+      args:
+          - file:
+              help: Sets the config file to be used.
+              required: true
+  - import:
+      about: imports the current kubeconfig into the config directory.
+      args:
+          - name: 
+              help: Sets the name of the kubeconfig.
+              required: true     
+  - show:
+      about: Prints the target config to standard out.
+      args:
+          - config:
+              help: Sets the name of the kubeconfig.
+              takes_value: true 
+          - current:
+              help: Targets the current kubeconfig.
+  - context:
+      about: Manages the contexts in the current kubeconfig.
+      author: cwlo
+      subcommands:
+        - list:
+            about: Lists the contexts available in the current kubeconfig.
+        - switch:
+            about: Sets the current context in the kubeconfig file.
+            args:
+              - INPUT:
+                  required: true
+                  takes_value: true
+                  help: Sets the name of the context to switch to.
