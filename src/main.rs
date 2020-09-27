@@ -3,11 +3,13 @@ extern crate clap;
 extern crate config;
 extern crate dirs; 
 
+pub mod list;
+
 use clap::App;
 use std::fs;
 use std::env;
 use std::path::PathBuf;
-
+use list::list::list_configs;
 
 // Modules
 // mod config;
@@ -41,8 +43,7 @@ fn main() -> () {
 
     match matches.subcommand_name() {
         Some("list") => {
-            println!("list subcommmand found");
-            // Call list_configs return array out to std_out line by line
+            list_configs(config_dir_path);
         }
         Some("delete") => {
             println!("delete subcommmand found");
