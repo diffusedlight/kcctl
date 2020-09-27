@@ -7,6 +7,8 @@ settings:
   - ArgsNegateSubcommands
   - GlobalVersion
 subcommands:
+  - configure:
+      about: Configure kcctl's kubeconfig location and config directory
   - list:
       about: List kubeconfig files in the config directory.
   - delete: 
