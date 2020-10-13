@@ -4,7 +4,7 @@ author: cwlo
 about: Helps manage kubeconfig files
 settings:
   - ArgRequiredElseHelp
-  - ArgsNegateSubcommands
+  # - ArgsNegateSubcommands
   - GlobalVersion
 subcommands:
   - configure:
@@ -12,10 +12,13 @@ subcommands:
   - list:
       about: List kubeconfig files in the config directory.
   - delete: 
-      about: Deletes a config from the config directory.
+      about: Deletes a specified config file.
       args:
           - current:
-              help: Deletes the current config from the config directory.
+              help: Deletes the current active config from the KUBECONFIG location
+              long: current
+              conflicts_with:
+                - file
           - file:
               takes_value: true
               help: Deletes the target config file from the config directrory.
