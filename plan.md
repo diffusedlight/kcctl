@@ -7,7 +7,7 @@
 - load config file from defaulted directory
 	- Need to figure out where we are going to place this. 
 	- Would like to honor XDG_CONFIG_DIRS
-- list my kubeconfig files 
+- [X] list my kubeconfig files 
 - delete my kubeconfig files
 - switch my kubeconfig files
 - import my kubeconfig in to the config directory
