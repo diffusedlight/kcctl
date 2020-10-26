@@ -50,6 +50,8 @@ fn main() -> () {
                 fs::remove_file(&kubeconfig_path).expect("File Not Found")
             } else if let Some(file) = delete_matches.value_of("file") {
                 println!("Value of file is: {:?}", file); 
+                let mut config_path = &config_dir_path.push(&file.to_string());
+                println!("{} deleted.", file);
             }
         }
         ("switch", Some(switch_matches)) => {
