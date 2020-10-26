@@ -21,17 +21,20 @@ fn main() -> () {
     let matches = App::from_yaml(yaml).get_matches();
 
     let mut config_dir_path = dirs::config_dir().unwrap();
+    println!("{:?}", config_dir_path);
     config_dir_path.push("kcctl/configs");
 
     let mut base_config_path = dirs::config_dir().unwrap();
     base_config_path.push("kcctl");
+    fs::create_dir_all(&base_config_path);
+    fs::create_dir_all(&config_dir_path);
 
-    if base_config_path.exists() {
-        fs::create_dir(&base_config_path);
-        fs::create_dir(&config_dir_path);
-    } else if config_dir_path.exists() {
-        fs::create_dir(&config_dir_path);
-    };
+    // if base_config_path.exists() {
+    //     fs::create_dir_all(&base_config_path);
+    //     fs::create_dir_all(&config_dir_path);
+    // } else if config_dir_path.exists() {
+    //     fs::create_dir_all(&config_dir_path);
+    // };
 
     let kubeconfig_path = match env::var("KUBECONFIG") {
         Ok(v) => PathBuf::from(v),
