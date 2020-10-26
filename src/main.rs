@@ -4,9 +4,11 @@ extern crate config;
 extern crate dirs;
 
 pub mod list;
+pub mod import;
 
 use clap::App;
 use list::list_configs;
+use import::import_config;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
@@ -31,7 +33,7 @@ fn main() -> () {
         fs::create_dir(&config_dir_path);
     };
 
-    let _kubeconfig_path = match env::var("KUBECONFIG") {
+    let kubeconfig_path = match env::var("KUBECONFIG") {
         Ok(v) => PathBuf::from(v),
         Err(_e) => {
             let mut temp_config_path = dirs::home_dir().unwrap();
@@ -49,6 +51,7 @@ fn main() -> () {
             println!("delete subcommmand found");
             if delete_matches.is_present("current") {
                 println!("current flag found");
+                fs::remove_file(&kubeconfig_path).expect("File Not Found")
             } else if let Some(file) = delete_matches.value_of("file") {
                 println!("Value of file is: {:?}", file); 
             }
@@ -64,11 +67,10 @@ fn main() -> () {
         ("import", Some(import_matches)) => {
             println!("import subcommmand found");
             if let name = import_matches.value_of("name").unwrap() {
-                println!("Value of name is: {:?}", name)
-            } 
-            // Write logic to handle import commands
-            // Pass 'name' arg to import_config function
+                import_config(config_dir_path, kubeconfig_path, name.to_string());
+            }
         }
+
         ("show", Some(show_matches)) => {
             println!("show subcommmand found");
             if show_matches.is_present("current") {
