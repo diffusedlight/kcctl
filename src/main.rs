@@ -29,6 +29,13 @@ fn main() -> () {
     fs::create_dir_all(&base_config_path);
     fs::create_dir_all(&config_dir_path);
 
+    // if base_config_path.exists() {
+    //     fs::create_dir_all(&base_config_path);
+    //     fs::create_dir_all(&config_dir_path);
+    // } else if config_dir_path.exists() {
+    //     fs::create_dir_all(&config_dir_path);
+    // };
+
     let kubeconfig_path = match env::var("KUBECONFIG") {
         Ok(v) => PathBuf::from(v),
         Err(_e) => {
