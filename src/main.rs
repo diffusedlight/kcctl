@@ -6,12 +6,14 @@ extern crate dirs;
 pub mod list;
 pub mod import;
 pub mod delete;
+pub mod switch;
 
 use clap::App;
 use list::list_configs;
 use import::import_config;
 use delete::delete_current_config;
 use delete::delete_specified_config;
+use switch::switch_config;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
@@ -62,8 +64,9 @@ fn main() -> () {
         }
         ("switch", Some(switch_matches)) => {
             println!("switch subcommmand found");
-            if let f = switch_matches.value_of("file").unwrap() {
-                println!("Value of file is: {:?}", f); 
+            if let file = switch_matches.value_of("file").unwrap() {
+                println!("Value of file is: {:?}", file); 
+                switch_config(config_dir_path, kubeconfig_path, file.to_string());
             }
             // Write logic to handle Args
             // Pass 'file' arg to switch_config function
