@@ -5,16 +5,16 @@ extern crate dirs;
 
 pub mod list;
 pub mod import;
+pub mod delete;
 
 use clap::App;
 use list::list_configs;
 use import::import_config;
+use delete::delete_current_config;
+use delete::delete_specified_config;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
-
-// Modules
-// mod config;
 
 fn main() -> () {
     let yaml = load_yaml!("cli.yml");
@@ -54,11 +54,10 @@ fn main() -> () {
             println!("delete subcommmand found");
             if delete_matches.is_present("current") {
                 println!("current flag found");
-                fs::remove_file(&kubeconfig_path).expect("File Not Found")
+                delete_current_config(kubeconfig_path);
             } else if let Some(file) = delete_matches.value_of("file") {
                 println!("Value of file is: {:?}", file); 
-                let mut config_path = &config_dir_path.push(&file.to_string());
-                println!("{} deleted.", file);
+                delete_specified_config(config_dir_path, file.to_string());
             }
         }
         ("switch", Some(switch_matches)) => {
