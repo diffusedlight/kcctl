@@ -31,13 +31,6 @@ fn main() -> () {
     fs::create_dir_all(&base_config_path);
     fs::create_dir_all(&config_dir_path);
 
-    // if base_config_path.exists() {
-    //     fs::create_dir_all(&base_config_path);
-    //     fs::create_dir_all(&config_dir_path);
-    // } else if config_dir_path.exists() {
-    //     fs::create_dir_all(&config_dir_path);
-    // };
-
     let kubeconfig_path = match env::var("KUBECONFIG") {
         Ok(v) => PathBuf::from(v),
         Err(_e) => {
@@ -52,6 +45,7 @@ fn main() -> () {
         ("list", Some(_list_matches)) => {
             list_configs(config_dir_path);
         }
+
         ("delete", Some(delete_matches)) => {
             println!("delete subcommmand found");
             if delete_matches.is_present("current") {
@@ -62,14 +56,15 @@ fn main() -> () {
                 delete_specified_config(config_dir_path, file.to_string());
             }
         }
+
         ("switch", Some(switch_matches)) => {
             println!("switch subcommmand found");
             if let file = switch_matches.value_of("file").unwrap() {
                 println!("Value of file is: {:?}", file); 
                 switch_config(config_dir_path, kubeconfig_path, file.to_string());
             }
-            // Write logic to handle Args
-            // Pass 'file' arg to switch_config function
+
+
         }
         ("import", Some(import_matches)) => {
             println!("import subcommmand found");
@@ -85,9 +80,9 @@ fn main() -> () {
             } else if let Some(config) = show_matches.value_of("config") {
                 println!("Value of config is {:?}", config)
             }
-            // Write logic to handle show commands.
-            // call show_command function with arg
+
         }
+
         ("context", Some(context_matches)) => {
             println!("context subcommmand found");
             if context_matches.is_present("list") {
@@ -100,14 +95,7 @@ fn main() -> () {
                 }
             }   
         }
-        ("namespace", Some(namespace_matches)) => {
-            println!("Namespace subcomand found");
-            if let namespace = namespace_matches.value_of("name").unwrap() {
-                println!("Value of name is: {:?}", namespace);
-            }
-            // Write Logic to Handle context arguements
-        }
-        // Some(&_) => println!("No valid subcommand found"),
+
         _ => println!("No subcommand found"),
     }
 }
