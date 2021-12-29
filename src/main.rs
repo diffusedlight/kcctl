@@ -28,8 +28,8 @@ fn main() -> () {
     config_dir_path.push("kcctl/configs");
     let mut base_config_path = dirs::config_dir().unwrap();
     base_config_path.push("kcctl");
-    fs::create_dir_all(&base_config_path);
-    fs::create_dir_all(&config_dir_path);
+    fs::create_dir_all(&base_config_path); // TODO: Handle Result
+    fs::create_dir_all(&config_dir_path); // TODO: Handle Result
 
     // Discover kubeconfig path if not default to `~/.kube/config`
     let kubeconfig_path = match env::var("KUBECONFIG") {
