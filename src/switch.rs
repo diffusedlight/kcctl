@@ -7,6 +7,6 @@ pub fn switch_config(config_dir_path: path::PathBuf, kubeconfig_path: path::Path
     config_path.push(&name.trim().to_lowercase());
     match fs::copy(config_path, kubeconfig_path) {
         Ok(_t) => println!("Switched config to {}", name),
-        Err(e) => eprintln!("Couldn't switch config")
+        Err(_e) => eprintln!("Couldn't switch config")
     }
 }

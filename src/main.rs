@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate clap;
-extern crate config;
 extern crate dirs;
 
 pub mod list;
@@ -19,18 +18,20 @@ use std::fs;
 use std::path::PathBuf;
 
 fn main() -> () {
+    // Load CLI structure & Assign any of the subcommands matched to matches 
     let yaml = load_yaml!("cli.yml");
     let matches = App::from_yaml(yaml).get_matches();
 
+    // Configure config paths to be used by app
     let mut config_dir_path = dirs::config_dir().unwrap();
     println!("{:?}", config_dir_path);
     config_dir_path.push("kcctl/configs");
-
     let mut base_config_path = dirs::config_dir().unwrap();
     base_config_path.push("kcctl");
     fs::create_dir_all(&base_config_path);
     fs::create_dir_all(&config_dir_path);
 
+    // Discover kubeconfig path if not default to `~/.kube/config`
     let kubeconfig_path = match env::var("KUBECONFIG") {
         Ok(v) => PathBuf::from(v),
         Err(_e) => {
