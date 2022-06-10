@@ -1,9 +1,9 @@
 # KCCTL
 
+A small tool for handling multiple seperate kubeconfig files.
+
 ## ARCHIVED
 I'm no longer maintaing this tool, as all the functionality can be replecated via a few shell aliases.
-
-A small tool for handling multiple seperate kubeconfig files.
 
 # Install
 
